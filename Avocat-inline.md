@@ -343,3 +343,151 @@ On peut constater que l’on est bien passé en root :
 ![alt_tag](https://user-images.githubusercontent.com/60784585/74042958-cc69e400-49c8-11ea-8534-7803f3eafe51.png)
 
 
+# Installation ZABBIX :
+
+Pour installer zabbix il nous faut une vm sous Debian
+
+Installer apache et php :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74157891-645e0c80-4c19-11ea-89bd-4a1772a8507f.png)
+
+Vérifier que le service apache est actif :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158025-a12a0380-4c19-11ea-9a41-a779ab2df5be.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158084-bc950e80-4c19-11ea-88db-4261bc199b54.png)
+
+Se rendre sur le serveur SRV-VM-BDD-001
+
+Se connecter à la base mariadb :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158174-e4847200-4c19-11ea-8fef-e7bdb6efc027.png)
+
+Créer la base zabbix et l’utilisateur en full privilège zabbix :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158278-172e6a80-4c1a-11ea-8377-d98e9ab529ba.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74158349-36c59300-4c1a-11ea-8e0f-53f7bac07cb8.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74158398-4ba22680-4c1a-11ea-8a65-94105b194877.png)
+
+On ajoute les lignes suivante dans : /etc/mysql/mariadb.conf.d :
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158498-77bda780-4c1a-11ea-9f19-c54d3b82c3bc.png)
+
+On repart sur le serveur SRV-VM-MNT-001 et on install zabbix :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158568-991e9380-4c1a-11ea-878b-ff97b13adb6d.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74158622-b0f61780-4c1a-11ea-9e3e-7aa2f0818adc.png)
+On install les packages pour l’interface web :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74158715-d8e57b00-4c1a-11ea-9592-debdec982fd2.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74158768-f1559580-4c1a-11ea-9853-20c3bcfea355.png)
+
+On configure le fichier de conf zabbix :
+
+![atl_tag](https://user-images.githubusercontent.com/60784585/74158844-1518db80-4c1b-11ea-9d8a-92bc30e7341c.png)
+
+On remplace par nos valeurs :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159027-5a3d0d80-4c1b-11ea-973c-c603ee15bc1e.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74159089-76d94580-4c1b-11ea-9d01-d907cbf78236.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74159228-b6079680-4c1b-11ea-94c5-1c75ebb9f60c.png)![amt_tag](https://user-images.githubusercontent.com/60784585/74159269-c9b2fd00-4c1b-11ea-8dcb-1d1da4050ffa.png)
+
+On va configurer le fichier de configuration php pour que ça fonctionne avec l’interface zabbix, on va paramétrer le bon fuseau horaire.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159371-f830d800-4c1b-11ea-9b26-c4d7e5ea95fb.png)
+Enlever le # de : php_value date.timezone Europe/Riga
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159460-1f87a500-4c1c-11ea-982f-de399f4fe02a.png)
+
+On redémarre le service :
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159618-5b226f00-4c1c-11ea-8d75-05fa600d74e8.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159725-85742c80-4c1c-11ea-92e5-2f0046552df8.png)	
+
+On va configurer zabbix depuis l’interface web, on va utiliser google chrome : [http://192.168.10.247/zabbix/setup.php](http://192.168.10.247/zabbix/setup.php)
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159806-a89edc00-4c1c-11ea-9c38-4c5c6d295d4a.png)
+
+Cliquer sur next setup , bien vérifier que tout est ok :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74159917-dc7a0180-4c1c-11ea-8adf-8dfc36575408.png)
+
+Cliquer sur next, on va configurer l’accès à la bdd : (on met le port 3306 c'est le port par default pour la bdd)	
+
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160050-164b0800-4c1d-11ea-87f7-22626a63b755.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160134-3975b780-4c1d-11ea-8b3e-5fc4114a5642.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74160184-527e6880-4c1d-11ea-9799-13d0735e17df.png)
+
+La configuration initiale de l’interface est finie :
+
+Maintenant on se connecte : identifiant : Admin mdp : zabbix :
+
+Puis se rendre dans administration, user pour changer la langue et le mot de passe :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160293-7641ae80-4c1d-11ea-8166-a125ad900b94.png)
+
+Il suffit ensuite de paramétrer le monitoring :
+
+Pour se connecter utiliser l’url : [http://192.168.10.247/zabbix](http://192.168.10.247/zabbix).
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160447-b86af000-4c1d-11ea-9fc6-488fd361df4d.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160505-cf114700-4c1d-11ea-8735-09d62b3f91a5.png)
+
+
+# Installation de wordpress :
+
+Pour installer wordpress il nous faut une vm avec débian.
+
+Installer Apache sur Ubuntu Linux
+
+WordPress nécessite un serveur Web avec support PHP pour présenter ses pages Web.
+
+Utilisez la commande Ubuntu APT pour installer le serveur Apache.
+
+    apt-get update  
+	apt-get install apache2 php7.2 php7.2-mysql libapache2-mod-php7.2  
+	service apache2 restart
+
+Utilisez la commande suivante pour installer les modules PHP les plus utilisés d’Apache 7.2 ou 7.3 etc.
+
+	apt-get install php7.2-xml php7.2-curl php7.2-gd php7.2-mbstring  
+	 apt-get install php7.2-bz2 php7.2-zip php7.2-xml php7.2-curl  
+	apt-get install php7.2-json php7.2-opcache php7.2-readline
+
+Utilisez la commande suivante pour activer apache mod_rewrite et SSL.
+
+Activez le module SSL uniquement si vous envisagez de proposer du contenu HTTPS.
+
+	 a2enmod rewrite  
+	 a2enmod ssl  
+	 service apache2 restart
+
+Recherchez l'emplacement du fichier de configuration PHP sur votre système.
+
+Editez le fichier de configuration php.ini.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160847-52cb3380-4c1e-11ea-8bf0-50f0e1eec9ae.png)
+Et mettre cette config :
+![alt_tag](https://user-images.githubusercontent.com/60784585/74160930-70989880-4c1e-11ea-81e6-d58d9e239a2e.png)
+
+Redémarrez le serveur Web Apache manuellement.
+
+	service apache2 restart
+	service apache2 status
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74161033-a047a080-4c1e-11ea-9cf6-31ceafcc570e.png)
+
+Téléchargez la dernière version de WordPress et extrayez-le package.
+
+	wget https://wordpress.org/latest.tar.gz  
+	tar -zxvf latest.tar.gz
+
+Déplacez le dossier WordPress dans votre répertoire de lecteur racine Apache.
+
+Donnez à l'utilisateur www-data le contrôle total sur le répertoire WordPress et ses fichiers.
+
+	mv wordpress /var/www/html/  
+	chown www-data:www-data /var/www/html/wordpress/* -R
+
+Créez et éditez le fichier de configuration WordPress wp-config.php.
+
+	cd /var/www/html/wordpress  
+	mv wp-config-sample.php wp-config.php  
+	vi wp-config.php
+
+Modifiez les informations de connexion à la base de données MySQL situées sur le fichier wp-config.file.
+
+A titre d'exemple, voici le fichier avec notre configuration.
+
+
