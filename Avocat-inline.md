@@ -513,3 +513,132 @@ Une fois la connexion établie, le tableau de bord WordPress s’affiche.
 
 ![alt_tag](https://user-images.githubusercontent.com/60784585/74245164-dc443980-4ce2-11ea-8bd3-651a69c2ad48.png)
 
+# Installation de zential 
+
+Selectionner la langue :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246092-427d8c00-4ce4-11ea-81c2-d03dccb5856d.png)
+
+Sélectionner le premier : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246183-680a9580-4ce4-11ea-9fa0-fefce1b22284.png)
+Sélectionner France : 
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246293-95574380-4ce4-11ea-9dc2-3ed8a51969fd.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246351-abfd9a80-4ce4-11ea-92c6-7bce07a880ae.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246417-c8013c00-4ce4-11ea-8f31-9a567cf27483.png)
+On Nomme la machine : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246493-e49d7400-4ce4-11ea-8ec8-03be0305ac20.png)
+On nomme l'utilisateur : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246554-00a11580-4ce5-11ea-8f44-d4ca24b0943d.png)
+
+On choisi un mot de passe : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246630-229a9800-4ce5-11ea-9868-cf70effda759.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74246743-4d84ec00-4ce5-11ea-85a3-e4c350cfe096.png)
+
+On accepte la time zone si c’est la bonne puis on clique sur terminer quand l’installation est fini.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74246851-73aa8c00-4ce5-11ea-9754-070a24dc18b1.png)
+
+On ce connecte à l'interface web grâce à un navigateur : (https://ipserveurzentyal:8443)
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247020-b2404680-4ce5-11ea-8873-5cb987d1348e.png)
+accepter le risque : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247136-e4ea3f00-4ce5-11ea-906f-a37b902a7717.png)
+
+Se connecter à : https://ipserveurzentyal:8443/login/index
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247327-2bd83480-4ce6-11ea-8788-e20bdab773fa.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247384-427e8b80-4ce6-11ea-8276-2684c6f17d81.png)
+
+On clique sur continuer : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247469-60e48700-4ce6-11ea-8335-d7bc62515111.png)
+On sélectionne les options que l'on veut installer : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247561-8a9dae00-4ce6-11ea-8406-acafae8a18b2.png)
+On clique sur installer : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247644-a608b900-4ce6-11ea-8557-eaad873a4990.png)
+
+On clique sur continuer : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247711-c769a500-4ce6-11ea-90cf-4eea7cca670a.png)
+On va configurer l’ip en static :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74247806-f3852600-4ce6-11ea-8e2e-e47767d38fe7.png)![alt_tag](https://user-images.githubusercontent.com/60784585/74247863-07c92300-4ce7-11ea-9948-955bacfef35b.png)
+
+Aller dans DHCP et rentrée votre passerelle par défaut :
+
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74248075-57a7ea00-4ce7-11ea-8cce-3a0cd3dc66cb.png)
+
+
+## Ajouter un serveur dans ldap :
+
+On commence par faire une synchronisation ntp entre le client et le serveur ad
+
+	Apt-get -y install chrony
+
+Puis on vas modifier le fichier chrony.conf
+
+On commente : 
+
+	#pool 2.debian.pool.ntp.org iburst
+
+Et on ajoute : 
+
+	Server (ip du serveur ad)
+	
+On restart le service chrony : 
+
+	systemctl restart chrony
+
+Puis on vérifie notre souce ntp : 
+
+	chronyc sources
+
+	root@SRV-VM-BDD-001:~# chronyc sources
+
+	210 Number of sources = 1
+
+	MS Name/IP address  Stratum Poll Reach LastRx Last sample
+
+	===============================================================================
+
+	^* srv-vm-ad.inline.cesi  3  6  377  1  -751us[-1324us] +/-  33ms
+
+	root@SRV-VM-BDD-001:~#
+
+En suite on va ajouter les modules sssd :
+
+	apt -y install realmd sssd sssd-tools adcli krb5-user packagekit samba-common samba-common-bin samba-libs
+
+On rentre le nom de notre domaine puis deux fois le nom de notre serveur
+
+Ensuite on fait un nano du fichier :
+	
+	/etc/resolv.conf
+
+On remplace le nameserver par l’ip de notre ad et on sauvegarde.
+
+On va ensuite modifier le fichier:
+	
+	 /etc/pam.d/common-session 
+
+en ajoutant  
+	
+	pam_mkhomedir.so skel=/etc/skel usmask=077
+
+Puis on sauvegarde.
+
+On vas exécuter la commande : 
+	
+	 realm discover inline.cesi
+
+Puis on va vérifier si ça fonctionne : 
+	
+	id Administrator//inline.cesi
+
