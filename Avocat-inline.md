@@ -488,6 +488,28 @@ Créez et éditez le fichier de configuration WordPress wp-config.php.
 
 Modifiez les informations de connexion à la base de données MySQL situées sur le fichier wp-config.file.
 
-A titre d'exemple, voici le fichier avec notre configuration.
+A titre d'exemple, voici le fichier avec la configuration.
 
+![alt_tag](https://user-images.githubusercontent.com/60784585/74244765-385a8e00-4ce2-11ea-95e7-2d8230b5dc4e.png)
+Se connecter a wordpress : (grâce a un navigateur web)
+
+[http://192.168.10.249/wp-admin/](http://192.168.10.249/wp-admin/)
+
+L'assistant d'installation de WordPress sera présenté.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74244870-6344e200-4ce2-11ea-9ee8-b8ee8fe8b159.png)
+
+Sur l'écran suivant, vous devrez entrer les informations de votre site Web.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74244968-8d969f80-4ce2-11ea-84e9-abaf5db885c6.png)
+
+Sur l'écran suivant, vous recevrez la confirmation de votre installation WordPress.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74245064-b9198a00-4ce2-11ea-8e5c-ddd09cb623d3.png)
+
+Cliquez sur le bouton Connexion et entrez le compte administrateur et le mot de passe.
+
+Une fois la connexion établie, le tableau de bord WordPress s’affiche.
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74245164-dc443980-4ce2-11ea-8bd3-651a69c2ad48.png)
 
