@@ -720,5 +720,5 @@ On ce connecte ensuite sur l'interface web de pfsense avec un navigateur web et 
 
 Par défaut le user est admin et le mot de passe est pfsense :
 
-![alt_tag]](https://user-images.githubusercontent.com/60784585/74482798-81af0700-4eb5-11ea-89ce-e7d68f81faae.png)
+![alt_tag](https://user-images.githubusercontent.com/60784585/74482798-81af0700-4eb5-11ea-89ce-e7d68f81faae.png)
 
