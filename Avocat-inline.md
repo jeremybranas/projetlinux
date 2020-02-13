@@ -642,3 +642,31 @@ Puis on va vérifier si ça fonctionne :
 	
 	id Administrator//inline.cesi
 
+# On paramètre le serveur zentyal en serveur ntp sur les autres serveurs :
+
+On installe le module chrony : 
+	
+	 -y install chrony
+
+On va modifier le fichier de configuration de chrony :
+	
+	nano /etc/chrony/chrony.conf
+
+	#pool 2.debian.pool.ntp.org iburst  
+	add servers in your timezone to sync times
+	server ntp.nict.jp iburst  
+	server ntp1.jst.mfeed.ad.jp iburst
+
+On ajoute l'ip de notre serveur ntp dans le fichier chrony : 
+
+	allow 192.168.10.244/24
+	
+
+On restart le service chrony :
+
+	systemctl restart chrony
+
+
+puis on vérifie que l'on voit bien le bon serveur :
+
+	chronyc sources
