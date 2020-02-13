@@ -670,3 +670,55 @@ On restart le service chrony :
 puis on vérifie que l'on voit bien le bon serveur :
 
 	chronyc sources
+
+
+# Installation pfsense
+
+Telecharger l’iso sur : [https://www.pfsense.org/download/](https://www.pfsense.org/download/)
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74480475-414d8a00-4eb1-11ea-811e-699e42b0c0c5.png)
+
+Cliquer sur installer Pfsense : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74480584-7b1e9080-4eb1-11ea-8647-546e2923ee80.png)
+
+On sélectionne la bonne langue : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74480701-b5882d80-4eb1-11ea-8b4a-282238d83643.png)
+
+Sélectionner auto pour le partitionnement du disk
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74480823-ea948000-4eb1-11ea-9a6c-92bcb3dea136.png)
+
+Configuration de l’ip sur l’interface wan :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74480948-216a9600-4eb2-11ea-9343-bcf3b29e2ade.png)
+
+Taper 1 puis ‘n’ :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74481290-bd949d00-4eb2-11ea-86d4-df91489c8340.png)
+
+On sélectionne l'interface que l'on veut paramétrer en wan
+![alt_tag](https://user-images.githubusercontent.com/60784585/74481450-08aeb000-4eb3-11ea-8ce2-5a35cc6cdafb.png)
+
+On fait pareil pour la LAN  puis on clique sur Y : 
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74481657-6e9b3780-4eb3-11ea-9b53-40f2c5ead648.png)
+
+On va ensuite configurer les ip sur les deux interface (les ip seront nos passerelle WAN et LAN) :
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74481987-f5e8ab00-4eb3-11ea-856c-f73e7a47300c.png)
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74482102-31837500-4eb4-11ea-8517-16fe2fe2b250.png)
+
+
+![alt_tag](https://user-images.githubusercontent.com/60784585/74482196-5d065f80-4eb4-11ea-8630-6f9f5a8a6e58.png)
+
+On ce connecte ensuite sur l'interface web de pfsense avec un navigateur web et on pourras y configurer plein d'option de pfsense :
+
+	[http://192.168.10.254/wizard.php?xml=setup_wizard.xml](http://192.168.10.254/wizard.php?xml=setup_wizard.xml)
+
+Par défaut le user est admin et le mot de passe est pfsense :
+
+![alt_tag]](https://user-images.githubusercontent.com/60784585/74482798-81af0700-4eb5-11ea-89ce-e7d68f81faae.png)
+
